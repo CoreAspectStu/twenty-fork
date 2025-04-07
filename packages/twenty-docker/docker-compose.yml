@@ -13,12 +13,12 @@ services:
       PG_DATABASE_URL: postgres://${PG_DATABASE_USER:-postgres}:${PG_DATABASE_PASSWORD:-postgres}@${PG_DATABASE_HOST:-db}:${PG_DATABASE_PORT:-5432}/default
       SERVER_URL: ${SERVER_URL}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      STORAGE_TYPE: ${STORAGE_TYPE}
+      # Default STORAGE_TYPE is set to "local" (allowed values: s3, local)
+      STORAGE_TYPE: ${STORAGE_TYPE:-local}
       STORAGE_S3_REGION: ${STORAGE_S3_REGION}
       STORAGE_S3_NAME: ${STORAGE_S3_NAME}
       STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
       APP_SECRET: ${APP_SECRET:-replace_me_with_a_random_string}
-      # Note: Removed deprecated STORAGE_LOCAL_PATH variable
     depends_on:
       db:
         condition: service_healthy
@@ -39,7 +39,8 @@ services:
       SERVER_URL: ${SERVER_URL}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       DISABLE_DB_MIGRATIONS: "true"
-      STORAGE_TYPE: ${STORAGE_TYPE}
+      # Use same default for STORAGE_TYPE to ensure consistency
+      STORAGE_TYPE: ${STORAGE_TYPE:-local}
       STORAGE_S3_REGION: ${STORAGE_S3_REGION}
       STORAGE_S3_NAME: ${STORAGE_S3_NAME}
       STORAGE_S3_ENDPOINT: ${STORAGE_S3_ENDPOINT}
