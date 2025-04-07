@@ -44,6 +44,8 @@ services:
       LOGIN_TOKEN_SECRET: ${LOGIN_TOKEN_SECRET}
       REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
       FILE_TOKEN_SECRET: ${FILE_TOKEN_SECRET}
+    volumes:
+      - server-local-data:/app/packages/twenty-server/.local-storage
     depends_on:
       postgres:
         condition: service_healthy
@@ -66,8 +68,13 @@ services:
       REDIS_HOST: "redis"
       REDIS_PORT: "6379"
       ENABLE_DB_MIGRATIONS: "false"
+    volumes:
+      - server-local-data:/app/packages/twenty-server/.local-storage
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
+
+volumes:
+  server-local-data:
