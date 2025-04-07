@@ -18,9 +18,9 @@ services:
       - server-local-data:/app/packages/twenty-server/.local-storage
       - docker-data:/app/docker-data
     ports:
-      - "3000:3000"
+      - "${HOST_PORT:-8080}:${CONTAINER_PORT:-3000}"
     environment:
-      NODE_PORT: 3000
+      NODE_PORT: ${CONTAINER_PORT:-3000}
       PG_DATABASE_URL: postgres://${PG_DATABASE_USER:-postgres}:${PG_DATABASE_PASSWORD:-postgres}@${PG_DATABASE_HOST:-db}:${PG_DATABASE_PORT:-5432}/default
       SERVER_URL: ${SERVER_URL}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
@@ -125,7 +125,7 @@ services:
       POSTGRES_USER: ${PG_DATABASE_USER:-postgres}
       POSTGRES_PASSWORD: ${PG_DATABASE_PASSWORD:-postgres}
     healthcheck:
-      test: pg_isready -U ${PG_DATABASE_USER:-postgres} -h localhost -d postgres
+      test: ["CMD", "curl", "--fail", "http://localhost:${CONTAINER_PORT:-3000}/healthz"]
       interval: 5s
       timeout: 5s
       retries: 10
