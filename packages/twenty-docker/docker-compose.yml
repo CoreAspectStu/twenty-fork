@@ -39,7 +39,6 @@ services:
       SERVER_URL: ${SERVER_URL}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       DISABLE_DB_MIGRATIONS: "true"
-      # Use same default for STORAGE_TYPE to ensure consistency
       STORAGE_TYPE: ${STORAGE_TYPE:-local}
       STORAGE_S3_REGION: ${STORAGE_S3_REGION}
       STORAGE_S3_NAME: ${STORAGE_S3_NAME}
